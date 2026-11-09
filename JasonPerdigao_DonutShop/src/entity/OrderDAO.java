@@ -1,0 +1,11 @@
+package entity;
+import core.DB;import java.sql.*;import java.util.*;
+public class OrderDAO implements DAO<Order>{
+ private Order map(ResultSet r)throws SQLException{return new Order(r.getInt("ORDER_ID"),r.getInt("TOTAL_CENTS"),r.getTimestamp("ORDER_DATE").toLocalDateTime().toString().replace('T',' '),r.getString("DONUT_NAME"),r.getInt("CUSTOMER_ID"),r.getInt("QUANTITY"));}
+ public Optional<Order> get(int id){try(PreparedStatement s=DB.getInstance().prepare("SELECT * FROM DONUT_ORDER WHERE ORDER_ID=?")){s.setInt(1,id);try(ResultSet r=s.executeQuery()){return r.next()?Optional.of(map(r)):Optional.empty();}}catch(SQLException e){throw new IllegalStateException(e.getMessage(),e);}}
+ public List<Order> getAll(){List<Order>a=new ArrayList<>();try(Statement s=DB.getInstance().connection().createStatement();ResultSet r=s.executeQuery("SELECT * FROM DONUT_ORDER ORDER BY ORDER_ID")){while(r.next())a.add(map(r));return a;}catch(SQLException e){throw new IllegalStateException(e.getMessage(),e);}}
+ public void insert(Order o){try(PreparedStatement s=DB.getInstance().prepare("INSERT INTO DONUT_ORDER VALUES (?,?,?,?,?,?)")){s.setInt(1,o.getID());s.setInt(2,o.getPrice());s.setTimestamp(3,Timestamp.valueOf(o.getDateTime()));s.setString(4,o.getItemName());s.setInt(5,o.getCustomerID());s.setInt(6,o.getQuantity());s.executeUpdate();}catch(SQLException e){throw new IllegalStateException(e.getMessage(),e);}}
+ public void update(Order o){try(PreparedStatement s=DB.getInstance().prepare("UPDATE DONUT_ORDER SET TOTAL_CENTS=?,ORDER_DATE=?,DONUT_NAME=?,CUSTOMER_ID=?,QUANTITY=? WHERE ORDER_ID=?")){s.setInt(1,o.getPrice());s.setTimestamp(2,Timestamp.valueOf(o.getDateTime()));s.setString(3,o.getItemName());s.setInt(4,o.getCustomerID());s.setInt(5,o.getQuantity());s.setInt(6,o.getID());s.executeUpdate();}catch(SQLException e){throw new IllegalStateException(e.getMessage(),e);}}
+ public void delete(Order o){try(PreparedStatement s=DB.getInstance().prepare("DELETE FROM DONUT_ORDER WHERE ORDER_ID=?")){s.setInt(1,o.getID());s.executeUpdate();}catch(SQLException e){throw new IllegalStateException(e.getMessage(),e);}}
+ public List<String> getColumnNames(){return List.of("ORDER_ID","TOTAL_CENTS","ORDER_DATE","DONUT_NAME","CUSTOMER_ID","QUANTITY");}
+}
