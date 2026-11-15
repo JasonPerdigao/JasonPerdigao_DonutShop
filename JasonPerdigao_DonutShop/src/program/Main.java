@@ -18,7 +18,7 @@ public class Main extends JFrame {
     private static final DateTimeFormatter FMT=DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
     private static final Map<String,Integer> MENU=new LinkedHashMap<>();
     static {
-        MENU.put("Classic Glazed",199); MENU.put("Chocolate Frosted",229); MENU.put("Strawberry Sprinkle",249);
+        MENU.put("Classic Glazed",150); MENU.put("Chocolate Frosted",229); MENU.put("Strawberry Sprinkle",249);
         MENU.put("Boston Cream",279); MENU.put("Maple Glazed",249); MENU.put("Cinnamon Sugar",199);
         MENU.put("Jelly Filled",259); MENU.put("Cookies & Cream",299); MENU.put("Old-Fashioned",219);
         MENU.put("Blueberry Cake",249); MENU.put("Apple Fritter",329); MENU.put("Dozen Assorted",2499);
@@ -34,11 +34,11 @@ public class Main extends JFrame {
     private final JTable orderTable=new JTable();
 
     public Main(){
-        super("Jason Donuts | Shop Management");
+        super("Jasons Donuts | Shop Management");
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE); setMinimumSize(new Dimension(960,650)); setSize(1120,760); setLocationRelativeTo(null);
         JPanel shell=new JPanel(new BorderLayout(0,16));shell.setBackground(CREAM);shell.setBorder(new EmptyBorder(18,22,20,22));setContentPane(shell);
         JPanel banner=new JPanel(new BorderLayout());banner.setBackground(BROWN);banner.setBorder(new EmptyBorder(18,22,18,22));
-        JLabel brand=new JLabel("Jason DONUTS");brand.setForeground(Color.WHITE);brand.setFont(new Font("SansSerif",Font.BOLD,27));
+        JLabel brand=new JLabel("Jasons DONUTS");brand.setForeground(Color.WHITE);brand.setFont(new Font("SansSerif",Font.BOLD,27));
         JLabel tagline=new JLabel("FRESHLY MADE • ALWAYS DELICIOUS");tagline.setForeground(PINK);tagline.setFont(new Font("SansSerif",Font.BOLD,12));
         JPanel brandBox=new JPanel(new GridLayout(2,1));brandBox.setOpaque(false);brandBox.add(brand);brandBox.add(tagline);banner.add(brandBox,BorderLayout.WEST);
         JLabel badge=new JLabel("  DONUTS  •  COFFEE  •  GOOD DAYS  ");badge.setForeground(BROWN);badge.setBackground(PINK);badge.setOpaque(true);badge.setBorder(new EmptyBorder(10,12,10,12));banner.add(badge,BorderLayout.EAST);shell.add(banner,BorderLayout.NORTH);
